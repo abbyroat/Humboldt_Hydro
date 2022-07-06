@@ -47,8 +47,6 @@ with open(args.points_file, 'r', newline='') as points_file:
         lons.append(float(csv_row[0]))
         lats.append(float(csv_row[1]))
 
-print(lons)
-print(lats)
 keepThreshold = 0.0 # fraction of cells that need to be good to process this scene
 minSpd = 0.8 # minimum speed in m/d for a location to be included
 
