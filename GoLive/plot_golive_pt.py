@@ -59,7 +59,7 @@ for i in range(len(arr)):
          col = '0.8'
 
      # only actually plot the years where we have historical RACMO forcing
-     if yr>=2014 and yr<=2018:
+     if yr>=2014 and yr<=2019:
         sp = int(yr-2014)
         doy = midDOY - np.floor(midDOY)
         a = ax.flatten()[sp] # get subplot for this year
@@ -68,7 +68,7 @@ for i in range(len(arr)):
 print("count={}".format(cnt))
 
 # Finalize plot axes after all velocity plotting is complete
-for i in range(5):
+for i in range(6):
    a = ax.flatten()[i]
    a.set_xlabel('Date')
    a.set_ylabel('Velocity (m/yr)')
@@ -100,7 +100,7 @@ if args.plotmali:
    xm, ym = t.transform(x0, y0)
 
    # loop over the years we have chosen to plot above
-   for y in range(2014, 2019):
+   for y in range(2014, 2019+1):
       # Open needed MALI output file and get needed vars
       f = netCDF4.Dataset(f'{MALIdir}/output_{y}.nc')
       xCell = f.variables['xCell'][:]
@@ -131,24 +131,24 @@ if args.plotmali:
       ax3.yaxis.label.set_color('b') # make label same color
 
    # plot location map
+   figMap, axMap = plt.subplots(1, 1, figsize=(5, 5))
    # uses final output file, seems ok
-   a = ax.flatten()[-1]
    H = f.variables['thickness'][0,:]
    melt = (f.variables['externalWaterInput'][:] /1000.0 * 3600.0 * 24.0).sum(axis=0)
    # plot approx. of ablation zone - places where ice thickness is nonzero and melt is nonzero
    # note we are arbitrarily using the runoff from the final year plotted above - ok for an approximation
-   a.scatter(xCell, yCell, 3, (H*melt)>0.0)
-   a.plot(xCell[ind], yCell[ind], 'r*') # plot the point we analyzed with a red star
+   axMap.scatter(xCell, yCell, 3, (H*melt)>0.0)
+   axMap.plot(xCell[ind], yCell[ind], 'r*') # plot the point we analyzed with a red star
 
-   a.axis('equal')
+   axMap.axis('equal')
    # zoom in a bit to where the action is
-   a.set_xlim((-4.85e5, -2.65e5))
-   a.set_ylim((-1.191e6, -1.0e6))
+   axMap.set_xlim((-4.85e5, -2.65e5))
+   axMap.set_ylim((-1.191e6, -1.0e6))
 
 
 
 fig.suptitle(f'UTM x={x0}, y={y0}') # state the point we used for provenance
-plt.tight_layout() # clean up subplots
+fig.tight_layout() # clean up subplots
 plt.show()
 
 
