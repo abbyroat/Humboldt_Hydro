@@ -105,7 +105,12 @@ if args.plotmali:
       f = netCDF4.Dataset(f'{MALIdir}/output_{y}.nc')
       xCell = f.variables['xCell'][:]
       yCell = f.variables['yCell'][:]
+      indexToCellID = f.variables['indexToCellID'][:]
       ind = np.argmin( (xCell-xm)**2 + (yCell-ym)**2)
+
+      print(f'Plotting MALI data for {y} at indexToCellID
+             {indexToCellID[ind]}, xCell {xCell[ind]},
+             yCell {yCell[ind]}')
 
       N = f.variables['effectivePressure'][:, ind]
 
