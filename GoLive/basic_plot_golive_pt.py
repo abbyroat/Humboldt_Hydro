@@ -108,9 +108,9 @@ if args.plotmali:
       indexToCellID = f.variables['indexToCellID'][:]
       ind = np.argmin( (xCell-xm)**2 + (yCell-ym)**2)
 
-      print(f'Plotting MALI data for {y} at indexToCellID
-             {indexToCellID[ind]}, xCell {xCell[ind]},
-             yCell {yCell[ind]}')
+      print(f'Plotting MALI data for {y} at indexToCellID', 
+            f' {indexToCellID[ind]}, xCell {xCell[ind]},',
+            f' yCell {yCell[ind]}')
 
       N = f.variables['effectivePressure'][:, ind]
 
